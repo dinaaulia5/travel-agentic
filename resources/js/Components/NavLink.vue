@@ -1,26 +1,62 @@
 <script setup>
-import { computed } from 'vue';
-import { Link } from '@inertiajs/vue3';
+import { Link } from "@inertiajs/vue3";
+import { cn } from "@/lib/utils";
 
-const props = defineProps({
-    href: {
+defineProps({
+    active: {
+        type: Boolean,
+        default: false,
+    },
+
+    url: {
+        type: String,
+        default: "#",
+    },
+
+    title: {
         type: String,
         required: true,
     },
-    active: {
-        type: Boolean,
+
+    icon: {
+        type: Object,
+        default: null,
+    },
+
+    method: {
+        type: String,
+        default: "get",
+    },
+
+    as: {
+        type: String,
+        default: "a",
+    },
+
+    class: {
+        type: String,
+        default: "",
     },
 });
-
-const classes = computed(() =>
-    props.active
-        ? 'inline-flex items-center px-1 pt-1 border-b-2 border-indigo-400 text-sm font-medium leading-5 text-gray-900 focus:outline-none focus:border-indigo-700 transition duration-150 ease-in-out'
-        : 'inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out',
-);
 </script>
 
 <template>
-    <Link :href="href" :class="classes">
-        <slot />
+    <Link
+        :href="url"
+        :method="method"
+        :as="as"
+        :class="
+            cn(
+                active
+                    ? 'bg-gradient-to-br from-emerald-500 via-emerald-500 to-yellow-200 font-medium text-white'
+                    : 'hover:bg-muted',
+                'flex items-center gap-3 rounded-lg p-2.5 transition-all dark:text-white',
+                $props.class,
+            )
+        "
+    >
+        <component :is="icon" v-if="icon" class="size-5" />
+
+        {{ title }}
     </Link>
 </template>

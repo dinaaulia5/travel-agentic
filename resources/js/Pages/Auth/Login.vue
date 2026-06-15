@@ -1,100 +1,122 @@
 <script setup>
-import Checkbox from '@/Components/Checkbox.vue';
-import GuestLayout from '@/Layouts/GuestLayout.vue';
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
-import { Head, Link, useForm } from '@inertiajs/vue3';
-
-defineProps({
-    canResetPassword: {
-        type: Boolean,
-    },
-    status: {
-        type: String,
-    },
-});
+import { Head, Link, useForm } from "@inertiajs/vue3";
+import { Moon } from "lucide-vue-next";
 
 const form = useForm({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
     remember: false,
 });
 
 const submit = () => {
-    form.post(route('login'), {
-        onFinish: () => form.reset('password'),
-    });
+    form.post(route("login"));
 };
 </script>
 
 <template>
-    <GuestLayout>
-        <Head title="Log in" />
+    <Head title="Login" />
 
-        <div v-if="status" class="mb-4 text-sm font-medium text-green-600">
-            {{ status }}
+    <div
+        class="min-h-screen bg-[#edf2f8] flex flex-col items-center justify-center px-4"
+    >
+        <div
+            class="w-full max-w-5xl overflow-hidden rounded-2xl border bg-white shadow-sm grid md:grid-cols-2"
+        >
+            <!-- LEFT -->
+            <div class="p-10 md:p-12 flex flex-col justify-center">
+                <div class="mb-8 flex items-center justify-center gap-3">
+                    <div
+                        class="h-12 w-12 rounded-2xl bg-gradient-to-br from-emerald-500 to-yellow-200 flex items-center justify-center text-white"
+                    >
+                        💳
+                    </div>
+                    <h1 class="text-2xl font-semibold">
+                        Smart Hub <span class="text-emerald-500">+</span>
+                    </h1>
+                </div>
+
+                <div class="mb-8 text-center">
+                    <h2 class="text-3xl font-bold text-gray-950">
+                        Selamat Datang
+                    </h2>
+                    <p class="mt-3 text-gray-500 leading-relaxed">
+                        Masuk ke platform Smart Hub untuk mengelola peminjaman
+                        ruang kerja dan peralatan studio secara mandiri
+                    </p>
+                </div>
+
+                <form @submit.prevent="submit" class="space-y-5">
+                    <div>
+                        <label class="text-sm font-medium">Email</label>
+                        <input
+                            v-model="form.email"
+                            type="email"
+                            placeholder="test@example.com"
+                            class="mt-2 w-full rounded-xl border border-gray-200 px-4 py-4 outline-none focus:ring-2 focus:ring-emerald-400"
+                        />
+                    </div>
+
+                    <div>
+                        <div class="flex items-center justify-between">
+                            <label class="text-sm font-medium">Password</label>
+                            <Link
+                                :href="route('password.request')"
+                                class="text-sm font-medium hover:underline"
+                            >
+                                Lupa Password
+                            </Link>
+                        </div>
+
+                        <input
+                            v-model="form.password"
+                            type="password"
+                            placeholder="********"
+                            class="mt-2 w-full rounded-xl border border-gray-200 px-4 py-4 outline-none focus:ring-2 focus:ring-emerald-400"
+                        />
+                    </div>
+
+                    <button
+                        type="submit"
+                        class="w-full rounded-xl bg-emerald-500 py-4 font-semibold text-white hover:bg-emerald-600 transition"
+                    >
+                        Login
+                    </button>
+                </form>
+
+                <p class="mt-8 text-center text-sm">
+                    Tidak memiliki akun ?
+                    <Link
+                        :href="route('register')"
+                        class="underline font-medium"
+                    >
+                        Daftar
+                    </Link>
+                </p>
+            </div>
+
+            <!-- RIGHT -->
+            <div
+                class="hidden md:flex items-center justify-center bg-[#f7f7f8]"
+            >
+                <img
+                    src="/images/login-illustration.png"
+                    alt="Login Illustration"
+                    class="h-full w-full object-cover"
+                />
+            </div>
         </div>
 
-        <form @submit.prevent="submit">
-            <div>
-                <InputLabel for="email" value="Email" />
+        <p class="mt-8 text-sm text-gray-500 text-center">
+            Dengan mengklik lanjutkan, anda menyetujui
+            <a href="#" class="underline">Persyaratan Layanan</a>
+            dan
+            <a href="#" class="underline">Kebijakan Privasi Kami</a>
+        </p>
 
-                <TextInput
-                    id="email"
-                    type="email"
-                    class="mt-1 block w-full"
-                    v-model="form.email"
-                    required
-                    autofocus
-                    autocomplete="username"
-                />
-
-                <InputError class="mt-2" :message="form.errors.email" />
-            </div>
-
-            <div class="mt-4">
-                <InputLabel for="password" value="Password" />
-
-                <TextInput
-                    id="password"
-                    type="password"
-                    class="mt-1 block w-full"
-                    v-model="form.password"
-                    required
-                    autocomplete="current-password"
-                />
-
-                <InputError class="mt-2" :message="form.errors.password" />
-            </div>
-
-            <div class="mt-4 block">
-                <label class="flex items-center">
-                    <Checkbox name="remember" v-model:checked="form.remember" />
-                    <span class="ms-2 text-sm text-gray-600"
-                        >Remember me</span
-                    >
-                </label>
-            </div>
-
-            <div class="mt-4 flex items-center justify-end">
-                <Link
-                    v-if="canResetPassword"
-                    :href="route('password.request')"
-                    class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                >
-                    Forgot your password?
-                </Link>
-
-                <PrimaryButton
-                    class="ms-4"
-                    :class="{ 'opacity-25': form.processing }"
-                    :disabled="form.processing"
-                >
-                    Log in
-                </PrimaryButton>
-            </div>
-        </form>
-    </GuestLayout>
+        <button
+            class="fixed bottom-8 right-8 h-14 w-20 rounded-2xl bg-emerald-500 text-white flex items-center justify-center shadow-lg"
+        >
+            <Moon class="h-5 w-5" />
+        </button>
+    </div>
 </template>
