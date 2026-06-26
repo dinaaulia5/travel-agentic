@@ -6,16 +6,13 @@ import { Card, CardContent } from "@/Components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/Components/ui/avatar";
 
 import {
-    IconBox,
-    IconCalendarEvent,
-    IconChartArrowsVertical,
-    IconCreditCardPay,
-    IconDoorEnter,
-    IconDoorExit,
-    IconLogout2,
-    IconLogs,
-    IconMenorah,
-    IconMoneybag,
+    IconLayoutDashboard,
+    IconMapPin,
+    IconPlane,
+    IconPlaneDeparture,
+    IconTicket,
+    IconRobot,
+    IconHistory,
 } from "@tabler/icons-vue";
 
 defineProps({
@@ -35,7 +32,7 @@ defineProps({
         <ApplicationLogo url="#" />
 
         <Card>
-            <CardContent class="flex items-center gap-x-3 p-3">
+            <CardContent class="flex items-center gap-3 p-3">
                 <Avatar>
                     <AvatarImage :src="auth?.avatar" />
                     <AvatarFallback>
@@ -45,12 +42,12 @@ defineProps({
 
                 <div class="flex flex-col">
                     <span
-                        class="line-clamp-1 text-sm font-medium leading-relaxed tracking-tighter"
+                        class="line-clamp-1 text-sm font-medium tracking-tight"
                     >
                         {{ auth?.name }}
                     </span>
 
-                    <span class="line-clamp-1 text-xs font-light">
+                    <span class="text-xs text-muted-foreground">
                         {{ auth?.id }}
                     </span>
                 </div>
@@ -58,105 +55,80 @@ defineProps({
         </Card>
 
         <ul role="list" class="flex flex-1 flex-col gap-y-2">
+            <!-- Dashboard -->
             <div class="px-3 py-2 text-sm font-medium text-muted-foreground">
                 General
             </div>
 
             <NavLink
                 title="Dashboard"
-                url="#"
+                :url="route('dashboard')"
                 :active="url.startsWith('/dashboard')"
-                :icon="IconBox"
+                :icon="IconLayoutDashboard"
             />
 
+            <!-- Master -->
             <div class="px-3 py-2 text-sm font-medium text-muted-foreground">
-                Master
+                Master Data
             </div>
 
             <NavLink
-                title="Metode Pembayaran"
-                url="#"
-                :active="url.startsWith('/payments')"
-                :icon="IconCreditCardPay"
+                title="Airports"
+                :url="route('airports.index')"
+                :active="url.startsWith('/airports')"
+                :icon="IconMapPin"
             />
 
+            <NavLink
+                title="Airlines"
+                :url="route('airlines.index')"
+                :active="url.startsWith('/airlines')"
+                :icon="IconPlane"
+            />
+
+            <NavLink
+                title="Flights"
+                :url="route('flights.index')"
+                :active="url.startsWith('/flights')"
+                :icon="IconPlaneDeparture"
+            />
+
+            <!-- Transaction -->
             <div class="px-3 py-2 text-sm font-medium text-muted-foreground">
-                Rencana
+                Transactions
             </div>
 
             <NavLink
-                title="Data Peralatan"
-                url="#"
-                :active="url.startsWith('/goals')"
-                :icon="IconMoneybag"
+                title="Bookings"
+                :url="route('bookings.index')"
+                :active="url.startsWith('/bookings')"
+                :icon="IconTicket"
             />
 
+            <!-- Agent -->
             <div class="px-3 py-2 text-sm font-medium text-muted-foreground">
-                Pelacakan
+                Agentic AI
             </div>
 
             <NavLink
-                title="Anggaran"
-                url="#"
-                :active="url.startsWith('/budgets')"
-                :icon="IconChartArrowsVertical"
+                title="Recommendations"
+                :url="route('agent-recommendations.index')"
+                :active="url.startsWith('/agent-recommendations')"
+                :icon="IconRobot"
             />
 
             <NavLink
-                title="Pemasukan"
-                url="#"
-                :active="url.startsWith('/incomes')"
-                :icon="IconDoorEnter"
+                title="Alternative Flight"
+                :url="route('alternatives.index')"
+                :active="url.startsWith('/alternatives')"
+                :icon="IconRobot"
             />
 
             <NavLink
-                title="Pengeluaran"
-                url="#"
-                :active="url.startsWith('/expenses')"
-                :icon="IconDoorExit"
-            />
-
-            <div class="px-3 py-2 text-sm font-medium text-muted-foreground">
-                Aset dan Kewajiban
-            </div>
-
-            <NavLink
-                title="Kekayaan Bersih"
-                url="#"
-                :active="url.startsWith('/net-worths')"
-                :icon="IconMenorah"
-            />
-
-            <div class="px-3 py-2 text-sm font-medium text-muted-foreground">
-                Laporan
-            </div>
-
-            <NavLink
-                title="Laporan Pelacakan"
-                url="#"
-                :active="url.startsWith('/report-trackings')"
-                :icon="IconLogs"
-            />
-
-            <NavLink
-                title="Laporan Tahunan"
-                url="#"
-                :active="url.startsWith('/annual-reports')"
-                :icon="IconCalendarEvent"
-            />
-
-            <div class="px-3 py-2 text-sm font-medium text-muted-foreground">
-                Lainnya
-            </div>
-
-            <NavLink
-                as="button"
-                method="post"
-                title="Logout"
-                :url="route('logout')"
-                :active="url.startsWith('/logout')"
-                :icon="IconLogout2"
-                class="w-full"
+                title="Activity Logs"
+                :url="route('agent-logs.index')"
+                :active="url.startsWith('/agent-logs')"
+                :icon="IconHistory"
             />
         </ul>
     </nav>

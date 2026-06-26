@@ -8,7 +8,7 @@ import {
 } from "@headlessui/vue";
 
 import Sidebar from "@/Layouts/Partials/Sidebar.vue";
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { Head, Link, usePage } from "@inertiajs/vue3";
 import { IconLayoutSidebar, IconX } from "@tabler/icons-vue";
 import Avatar from "@/Components/ui/avatar/Avatar.vue";
@@ -23,13 +23,18 @@ defineProps({
 });
 
 const sidebarOpen = ref(false);
+
 const page = usePage();
-const auth = page.props.auth.user;
-const url = page.url;
+
+const auth = computed(() => page.props.auth.user);
+const url = computed(() => page.url);
 </script>
 
 <template>
     <div>
+        <Head :title="title" />
+        <Toaster rich-colors position="top-center" />
+
         <!-- Mobile Sidebar -->
         <TransitionRoot as="template" :show="sidebarOpen">
             <Dialog

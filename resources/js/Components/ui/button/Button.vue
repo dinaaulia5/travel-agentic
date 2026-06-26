@@ -1,30 +1,46 @@
 <script setup>
 import { Primitive } from "reka-ui";
 import { cn } from "@/lib/utils";
-import { buttonVariants } from ".";
+import { buttonVariants } from "./index";
 
 const props = defineProps({
-  variant: { type: null, required: false },
-  size: { type: null, required: false },
-  class: {
-    type: [Boolean, null, String, Object, Array],
-    required: false,
-    skipCheck: true,
-  },
-  asChild: { type: Boolean, required: false },
-  as: { type: null, required: false, default: "button" },
+    variant: {
+        type: String,
+        default: "default",
+    },
+    size: {
+        type: String,
+        default: "default",
+    },
+    class: {
+        type: [String, Object, Array],
+        default: "",
+    },
+    asChild: {
+        type: Boolean,
+        default: false,
+    },
+    as: {
+        type: String,
+        default: "button",
+    },
 });
 </script>
 
 <template>
-  <Primitive
-    data-slot="button"
-    :data-variant="variant"
-    :data-size="size"
-    :as="as"
-    :as-child="asChild"
-    :class="cn(buttonVariants({ variant, size }), props.class)"
-  >
-    <slot />
-  </Primitive>
+    <Primitive
+        data-slot="button"
+        :data-variant="props.variant"
+        :data-size="props.size"
+        :as="props.as"
+        :as-child="props.asChild"
+        :class="
+            cn(
+                buttonVariants({ variant: props.variant, size: props.size }),
+                props.class,
+            )
+        "
+    >
+        <slot />
+    </Primitive>
 </template>

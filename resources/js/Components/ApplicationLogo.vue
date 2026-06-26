@@ -1,6 +1,6 @@
 <script setup>
 import { Link } from "@inertiajs/vue3";
-import { IconCash } from "@tabler/icons-vue";
+import { IconCash, IconPlaneArrival } from "@tabler/icons-vue";
 
 defineProps({
     url: {
@@ -15,13 +15,13 @@ defineProps({
         <div
             class="rounded-xl bg-gradient-to-br from-emerald-400 via-emerald-500 to-yellow-200 p-2"
         >
-            <IconCash class="size-6 text-white" />
+            <IconPlaneArrival class="size-6 text-white" />
         </div>
 
         <span
             class="text-xl font-semibold leading-relaxed tracking-wide dark:text-emerald-500"
         >
-            My Money
+            Travel Agentic
             <span class="text-lg text-emerald-500 dark:text-white"> + </span>
         </span>
     </Link>
